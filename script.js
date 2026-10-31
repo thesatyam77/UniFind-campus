@@ -17,8 +17,8 @@
    CONSTANTS & STATE
 ============================================================ */
 
-const SUPABASE_URL = 'PASTE_SUPABASE_PROJECT_URL_HERE';
-const SUPABASE_PUBLISHABLE_KEY = 'PASTE_SUPABASE_PUBLISHABLE_KEY_HERE';
+const SUPABASE_URL = 'https://pmrmhsnwdjlcfjvtuwcc.supabase.co';
+const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_j0HBKhS8MUaoJ5HtIQEiyQ_N_oChc-1';
 const SUPABASE_BUCKET = 'item-photos';
 const MAX_FILE_SIZE_BYTES = 10 * 1024 * 1024; // 10 MiB
 let supabaseClient = null;
