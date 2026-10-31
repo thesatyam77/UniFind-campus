@@ -1,0 +1,8 @@
+[functions.submit-report]
+verify_jwt = false
+
+[functions.resolve-report]
+verify_jwt = false
+
+[functions.cleanup-resolved-reports]
+verify_jwt = false

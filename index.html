@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="UniFind Campus — IIIT Guwahati Lost & Found. Lost it. Find it. Get it back." />
+  <meta name="theme-color" content="#080B12" />
+  <title>UniFind Campus — Lost it. Find it. Get it back.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ======================================================
+       TOAST NOTIFICATION CONTAINER
+  ====================================================== -->
+  <div id="toast-container" aria-live="polite" aria-atomic="true"></div>
+
+  <!-- ======================================================
+       NAVIGATION
+  ====================================================== -->
+  <nav class="navbar" id="navbar" role="navigation" aria-label="Main navigation">
+    <div class="nav-inner">
+
+      <!-- Logo -->
+      <a href="#hero" class="nav-logo" aria-label="UniFind Campus home">
+        <div class="logo-icon" aria-hidden="true">
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="12" cy="12" r="8" stroke="#00F5FF" stroke-width="2.2"/>
+            <path d="M18 18L24 24" stroke="#00F5FF" stroke-width="2.2" stroke-linecap="round"/>
+            <circle cx="12" cy="12" r="3" fill="#9D4EDD" opacity="0.8"/>
+            <path d="M12 7V9M12 15V17M7 12H9M15 12H17" stroke="#00F5FF" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <span class="logo-text">UniFind Campus</span>
+      </a>
+
+      <!-- Desktop Nav Links -->
+      <ul class="nav-links" role="list">
+        <li><a href="#browse" class="nav-link">Browse</a></li>
+        <li><a href="#report-section" class="nav-link">Report</a></li>
+        <li><a href="#about" class="nav-link">About</a></li>
+      </ul>
+
+      <!-- Nav CTA -->
+      <div class="nav-actions">
+        <button class="btn btn-ghost" onclick="scrollToReport('lost')" aria-label="Report a lost item">Report Lost</button>
+        <button class="btn btn-primary" onclick="scrollToReport('found')" aria-label="Report a found item">Report Found</button>
+      </div>
+
+      <!-- Mobile Hamburger -->
+      <button class="hamburger" id="hamburger" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="mobile-menu">
+        <span class="ham-line"></span>
+        <span class="ham-line"></span>
+        <span class="ham-line"></span>
+      </button>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobile-menu" role="menu" aria-hidden="true">
+      <a href="#browse" class="mobile-link" role="menuitem">Browse Items</a>
+      <a href="#report-section" class="mobile-link" role="menuitem">Report Item</a>
+      <a href="#about" class="mobile-link" role="menuitem">About</a>
+      <div class="mobile-actions">
+        <button class="btn btn-ghost" onclick="scrollToReport('lost'); closeMobileMenu()">Report Lost</button>
+        <button class="btn btn-primary" onclick="scrollToReport('found'); closeMobileMenu()">Report Found</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ======================================================
+       HERO SECTION
+  ====================================================== -->
+  <section class="hero" id="hero" aria-label="Hero section">
+
+    <!-- Animated background elements -->
+    <div class="hero-bg" aria-hidden="true">
+      <div class="grid-overlay"></div>
+      <div class="orb orb-1"></div>
+      <div class="orb orb-2"></div>
+      <div class="orb orb-3"></div>
+      <div class="floating-particle p1"></div>
+      <div class="floating-particle p2"></div>
+      <div class="floating-particle p3"></div>
+      <div class="floating-particle p4"></div>
+      <div class="floating-particle p5"></div>
+    </div>
+
+    <div class="container hero-content">
+      <div class="hero-text">
+
+        <!-- Badge -->
+        <div class="hero-badge" aria-label="IIITG Campus Community badge">
+          <span class="badge-dot" aria-hidden="true"></span>
+          IIITG CAMPUS COMMUNITY
+        </div>
+
+        <!-- Headline -->
+        <h1 class="hero-title">
+          Lost something?<br />
+          <span class="hero-highlight">Let's bring it home.</span>
+        </h1>
+
+        <!-- Description -->
+        <p class="hero-desc">
+          UniFind Campus is IIIT Guwahati's digital Lost &amp; Found board.
+          Report missing items, browse what's been found, and help
+          reunite belongings with their owners — all within our campus community.
+        </p>
+
+        <!-- CTA Buttons -->
+        <div class="hero-actions">
+          <button class="btn btn-lost hero-btn" onclick="scrollToReport('lost')" id="hero-lost-btn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+            I Lost Something
+          </button>
+          <button class="btn btn-found hero-btn" onclick="scrollToReport('found')" id="hero-found-btn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
+            I Found Something
+          </button>
+        </div>
+
+        <!-- Quick stats -->
+        <div class="hero-stats" aria-label="Platform statistics">
+          <div class="stat-item">
+            <span class="stat-number" id="stat-total">0</span>
+            <span class="stat-label">Total Reports</span>
+          </div>
+          <div class="stat-divider" aria-hidden="true"></div>
+          <div class="stat-item">
+            <span class="stat-number" id="stat-open">0</span>
+            <span class="stat-label">Open Cases</span>
+          </div>
+          <div class="stat-divider" aria-hidden="true"></div>
+          <div class="stat-item">
+            <span class="stat-number" id="stat-resolved">0</span>
+            <span class="stat-label">Resolved</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Hero Illustration -->
+      <div class="hero-visual" aria-hidden="true">
+        <div class="visual-ring ring-outer"></div>
+        <div class="visual-ring ring-mid"></div>
+        <div class="visual-ring ring-inner"></div>
+        <div class="visual-core">
+          <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="35" cy="35" r="22" stroke="#00F5FF" stroke-width="2.5" stroke-dasharray="6 3"/>
+            <path d="M51 51L64 64" stroke="#00F5FF" stroke-width="3" stroke-linecap="round"/>
+            <circle cx="35" cy="35" r="10" fill="#9D4EDD" opacity="0.4"/>
+            <circle cx="35" cy="35" r="4" fill="#00F5FF"/>
+            <path d="M35 20V23M35 47V50M20 35H23M47 35H50" stroke="#00F5FF" stroke-width="2" stroke-linecap="round"/>
+            <path d="M24 24L26 26M44 44L46 46M46 24L44 26M26 44L24 46" stroke="#9D4EDD" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <!-- Orbiting dots -->
+        <div class="orbit-dot od-1"></div>
+        <div class="orbit-dot od-2"></div>
+        <div class="orbit-dot od-3"></div>
+        <!-- Status cards floating around -->
+        <div class="float-card fc-1">
+          <span class="fc-icon">🔑</span>
+          <span>Keys found</span>
+        </div>
+        <div class="float-card fc-2">
+          <span class="fc-icon">📱</span>
+          <span>Phone lost</span>
+        </div>
+        <div class="float-card fc-3">
+          <span class="fc-icon">✓</span>
+          <span>Resolved!</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scroll cue -->
+    <a href="#browse" class="scroll-cue" aria-label="Scroll to browse items">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 10l5 5 5-5"/></svg>
+    </a>
+
+  </section>
+
+  <!-- ======================================================
+       BROWSE / DASHBOARD SECTION
+  ====================================================== -->
+  <section class="section browse-section" id="browse" aria-label="Browse lost and found items">
+    <div class="container">
+
+      <!-- Section header -->
+      <div class="section-header">
+        <div class="section-tag">LIVE BOARD</div>
+        <h2 class="section-title">Browse Reports</h2>
+        <p class="section-desc">Search through lost &amp; found items reported by the campus community.</p>
+      </div>
+
+      <!-- Dashboard Stats -->
+      <div class="dashboard-stats" role="region" aria-label="Dashboard statistics">
+        <div class="dash-stat-card">
+          <div class="dash-stat-icon lost-icon" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          </div>
+          <div>
+            <div class="dash-stat-num" id="dash-lost">0</div>
+            <div class="dash-stat-label">Lost Items</div>
+          </div>
+        </div>
+        <div class="dash-stat-card">
+          <div class="dash-stat-icon found-icon" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+          </div>
+          <div>
+            <div class="dash-stat-num" id="dash-found">0</div>
+            <div class="dash-stat-label">Found Items</div>
+          </div>
+        </div>
+        <div class="dash-stat-card">
+          <div class="dash-stat-icon resolved-icon" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-5"/></svg>
+          </div>
+          <div>
+            <div class="dash-stat-num" id="dash-resolved">0</div>
+            <div class="dash-stat-label">Resolved</div>
+          </div>
+        </div>
+        <div class="dash-stat-card">
+          <div class="dash-stat-icon total-icon" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>
+          </div>
+          <div>
+            <div class="dash-stat-num" id="dash-total">0</div>
+            <div class="dash-stat-label">Total Posts</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Search & Filter Bar -->
+      <div class="search-filter-bar" role="search" aria-label="Search and filter items">
+
+        <!-- Search Input -->
+        <div class="search-input-wrap">
+          <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          <input
+            type="search"
+            id="search-input"
+            class="search-input"
+            placeholder="Search by name, description, location…"
+            aria-label="Search items"
+            autocomplete="off"
+          />
+          <button class="clear-search" id="clear-search" aria-label="Clear search" style="display:none;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg>
+          </button>
+        </div>
+
+        <!-- Type Filter -->
+        <div class="filter-buttons" role="group" aria-label="Filter by type">
+          <button class="filter-btn active" data-filter="all" aria-pressed="true">All</button>
+          <button class="filter-btn" data-filter="lost" aria-pressed="false">Lost</button>
+          <button class="filter-btn" data-filter="found" aria-pressed="false">Found</button>
+        </div>
+
+        <!-- Category Filter -->
+        <select id="category-filter" class="category-select" aria-label="Filter by category">
+          <option value="all">All Categories</option>
+          <option value="Electronics">Electronics</option>
+          <option value="Bags & Accessories">Bags &amp; Accessories</option>
+          <option value="Books & Stationery">Books &amp; Stationery</option>
+          <option value="Clothing">Clothing</option>
+          <option value="ID & Documents">ID &amp; Documents</option>
+          <option value="Keys">Keys</option>
+          <option value="Sports & Recreation">Sports &amp; Recreation</option>
+          <option value="Jewelry & Accessories">Jewelry &amp; Accessories</option>
+          <option value="Food & Containers">Food &amp; Containers</option>
+          <option value="Other">Other</option>
+        </select>
+
+      </div>
+
+      <!-- Items Grid -->
+      <div class="items-grid" id="items-grid" role="list" aria-label="Item cards">
+        <!-- Populated by JavaScript -->
+      </div>
+
+      <!-- Empty State -->
+      <div class="empty-state" id="empty-state" style="display:none;" role="status" aria-live="polite">
+        <div class="empty-icon" aria-hidden="true">
+          <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="28" cy="28" r="18" stroke="#9BA7BD" stroke-width="2" stroke-dasharray="5 3" opacity="0.5"/>
+            <path d="M40 40L52 52" stroke="#9BA7BD" stroke-width="2" stroke-linecap="round" opacity="0.5"/>
+          </svg>
+        </div>
+        <h3 class="empty-title">Nothing found here</h3>
+        <p class="empty-desc" id="empty-message">No items match your search. Try different keywords or clear your filters.</p>
+        <button class="btn btn-ghost" onclick="clearAllFilters()">Clear Filters</button>
+      </div>
+
+      <section class="recently-resolved-section" id="recently-resolved-section" aria-label="Recently resolved reports" style="display:none;">
+        <div class="section-header resolved-section-header">
+          <div class="section-tag">RECENTLY CLOSED</div>
+          <h3 class="section-title">Recently Resolved</h3>
+          <p class="section-desc">Resolved reports remain visible for up to one hour, then are removed automatically.</p>
+        </div>
+        <div class="items-grid" id="resolved-grid" role="list" aria-label="Recently resolved items"></div>
+      </section>
+
+    </div>
+  </section>
+
+  <!-- ======================================================
+       REPORT FORM SECTION
+  ====================================================== -->
+  <section class="section report-section" id="report-section" aria-label="Report a lost or found item">
+    <div class="container">
+
+      <!-- Section header -->
+      <div class="section-header">
+        <div class="section-tag">REPORT ITEM</div>
+        <h2 class="section-title">Submit a Report</h2>
+        <p class="section-desc">Fill in the details below to post a lost or found item report.</p>
+      </div>
+
+      <!-- Report Form Card -->
+      <div class="form-card">
+
+        <!-- Type Toggle -->
+        <div class="type-toggle" role="group" aria-label="Select report type">
+          <button
+            type="button"
+            class="type-btn active"
+            id="type-lost-btn"
+            data-type="lost"
+            aria-pressed="true"
+            onclick="setReportType('lost')"
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+            I Lost Something
+          </button>
+          <button
+            type="button"
+            class="type-btn"
+            id="type-found-btn"
+            data-type="found"
+            aria-pressed="false"
+            onclick="setReportType('found')"
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
+            I Found Something
+          </button>
+        </div>
+
+        <!-- The Form -->
+        <form id="report-form" novalidate aria-label="Item report form">
+
+          <!-- Row: Item Name + Category -->
+          <div class="form-row">
+            <div class="form-group">
+              <label for="item-name" class="form-label">
+                Item Name <span class="required" aria-hidden="true">*</span>
+              </label>
+              <input
+                type="text"
+                id="item-name"
+                name="itemName"
+                class="form-input"
+                placeholder="e.g. Blue backpack, iPhone 14…"
+                maxlength="100"
+                autocomplete="off"
+                required
+                aria-required="true"
+                aria-describedby="item-name-error"
+              />
+              <span class="field-error" id="item-name-error" role="alert" aria-live="polite"></span>
+            </div>
+
+            <div class="form-group">
+              <label for="item-category" class="form-label">
+                Category <span class="required" aria-hidden="true">*</span>
+              </label>
+              <select
+                id="item-category"
+                name="category"
+                class="form-select"
+                required
+                aria-required="true"
+                aria-describedby="item-category-error"
+              >
+                <option value="">Select a category</option>
+                <option value="Electronics">Electronics</option>
+                <option value="Bags & Accessories">Bags &amp; Accessories</option>
+                <option value="Books & Stationery">Books &amp; Stationery</option>
+                <option value="Clothing">Clothing</option>
+                <option value="ID & Documents">ID &amp; Documents</option>
+                <option value="Keys">Keys</option>
+                <option value="Sports & Recreation">Sports &amp; Recreation</option>
+                <option value="Jewelry & Accessories">Jewelry &amp; Accessories</option>
+                <option value="Food & Containers">Food &amp; Containers</option>
+                <option value="Other">Other</option>
+              </select>
+              <span class="field-error" id="item-category-error" role="alert" aria-live="polite"></span>
+            </div>
+          </div>
+
+          <!-- Description -->
+          <div class="form-group">
+            <label for="item-description" class="form-label">
+              Description <span class="required" aria-hidden="true">*</span>
+            </label>
+            <textarea
+              id="item-description"
+              name="description"
+              class="form-textarea"
+              placeholder="Describe the item — colour, brand, distinctive marks, anything that helps identify it…"
+              rows="4"
+              maxlength="500"
+              required
+              aria-required="true"
+              aria-describedby="item-description-error"
+            ></textarea>
+            <div class="char-count"><span id="desc-count">0</span>/500</div>
+            <span class="field-error" id="item-description-error" role="alert" aria-live="polite"></span>
+          </div>
+
+          <!-- Row: Location + Date -->
+          <div class="form-row">
+            <div class="form-group">
+              <label for="item-location" class="form-label" id="location-label">
+                Last Seen Location <span class="required" aria-hidden="true">*</span>
+              </label>
+              <input
+                type="text"
+                id="item-location"
+                name="location"
+                class="form-input"
+                placeholder="e.g. Library, Mess Block, LT-1…"
+                maxlength="150"
+                autocomplete="off"
+                required
+                aria-required="true"
+                aria-describedby="item-location-error"
+              />
+              <span class="field-error" id="item-location-error" role="alert" aria-live="polite"></span>
+            </div>
+
+            <div class="form-group">
+              <label for="item-date" class="form-label" id="date-label">
+                Date Lost <span class="required" aria-hidden="true">*</span>
+              </label>
+              <input
+                type="date"
+                id="item-date"
+                name="date"
+                class="form-input"
+                required
+                aria-required="true"
+                aria-describedby="item-date-error"
+              />
+              <span class="field-error" id="item-date-error" role="alert" aria-live="polite"></span>
+            </div>
+          </div>
+
+          <!-- Photo Upload -->
+          <div class="form-group">
+            <label class="form-label" id="photo-label">
+              Photo <span class="required" aria-hidden="true">*</span>
+              <span class="label-hint">(JPG, PNG, WebP — max 10 MiB)</span>
+            </label>
+            <div class="upload-area" id="upload-area" role="button" tabindex="0" aria-label="Click or drag to upload a photo" aria-describedby="photo-error">
+              <input
+                type="file"
+                id="photo-input"
+                name="photo"
+                accept="image/jpeg,image/png,image/webp"
+                aria-hidden="true"
+                tabindex="-1"
+              />
+              <div class="upload-placeholder" id="upload-placeholder">
+                <div class="upload-icon" aria-hidden="true">
+                  <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+                </div>
+                <p class="upload-text">Drop your photo here or <span class="upload-link">click to browse</span></p>
+                <p class="upload-subtext">Supports JPG, PNG, WebP up to 10 MiB</p>
+              </div>
+              <div class="upload-preview" id="upload-preview" style="display:none;" aria-live="polite">
+                <img id="preview-img" src="" alt="Preview of uploaded item photo" />
+                <button type="button" class="remove-photo" id="remove-photo" aria-label="Remove uploaded photo">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg>
+                </button>
+              </div>
+            </div>
+            <span class="field-error" id="photo-error" role="alert" aria-live="polite"></span>
+          </div>
+
+          <!-- Optional Contact -->
+          <div class="form-group">
+            <label class="form-label">
+              Contact Method
+              <span class="label-hint optional">(optional)</span>
+            </label>
+            <div class="form-row contact-row">
+              <select id="contact-method" name="contactMethod" class="form-select" aria-label="Contact method">
+                <option value="">Prefer not to share</option>
+                <option value="Email">Email</option>
+                <option value="Phone">Phone Number</option>
+                <option value="Instagram">Instagram Handle</option>
+                <option value="WhatsApp">WhatsApp</option>
+              </select>
+              <input
+                type="text"
+                id="contact-details"
+                name="contactDetails"
+                class="form-input"
+                placeholder="Enter contact details…"
+                maxlength="100"
+                autocomplete="off"
+                aria-label="Contact details"
+                aria-describedby="contact-hint"
+              />
+            </div>
+            <p class="field-hint" id="contact-hint">Your contact details stay private unless you explicitly choose to make them public.</p>
+            <label class="contact-public-toggle" for="contact-public">
+              <input type="checkbox" id="contact-public" name="contactPublic" />
+              <span>Show my contact details on the public report</span>
+            </label>
+          </div>
+
+          <!-- Privacy Checkbox -->
+          <div class="form-group checkbox-group">
+            <label class="checkbox-label" for="privacy-check">
+              <input
+                type="checkbox"
+                id="privacy-check"
+                name="privacy"
+                required
+                aria-required="true"
+                aria-describedby="privacy-error"
+              />
+              <span class="custom-checkbox" aria-hidden="true"></span>
+              <span class="checkbox-text">
+                I confirm that the information I have provided is accurate.
+                I understand that this report is visible to members of the campus community
+                and I agree to use this platform responsibly.
+              </span>
+            </label>
+            <span class="field-error" id="privacy-error" role="alert" aria-live="polite"></span>
+          </div>
+
+          <!-- Safety Notice -->
+          <div class="safety-notice" role="note" aria-label="Safety notice">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            <p>
+              <strong>Safety reminder:</strong> When claiming an item, always meet in a public place
+              like the library or main lobby. Never share sensitive personal or financial information.
+            </p>
+          </div>
+
+          <!-- Spam honeypot: hidden from normal visitors, checked by the server. -->
+          <div class="hp-field" aria-hidden="true">
+            <label for="website">Leave this field empty</label>
+            <input type="text" id="website" name="website" tabindex="-1" autocomplete="off" />
+          </div>
+
+          <!-- Submit Button -->
+          <button type="submit" class="btn btn-submit" id="submit-btn" aria-label="Submit report">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 2L11 13"/><path d="M22 2L15 22 11 13 2 9l20-7z"/></svg>
+            <span id="submit-btn-text">Post Lost Report</span>
+          </button>
+
+        </form>
+      </div>
+
+      <!-- Cloud status and storage notice -->
+      <div class="storage-notice" id="storage-notice" role="note" aria-label="Cloud sync information">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+        <p><strong>Cloud sync:</strong> <span id="cloud-status" class="cloud-status" role="status" aria-live="polite">Checking configuration…</span><br />Reports are shared through Supabase. Contact details are public only when the reporter opts in. Images are publicly viewable, so do not upload sensitive information.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ======================================================
+       ABOUT SECTION
+  ====================================================== -->
+  <section class="section about-section" id="about" aria-label="About UniFind Campus">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-tag">ABOUT</div>
+        <h2 class="section-title">How UniFind Campus Works</h2>
+      </div>
+      <div class="how-it-works">
+        <div class="step-card">
+          <div class="step-num" aria-hidden="true">01</div>
+          <div class="step-icon" aria-hidden="true">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <h3 class="step-title">Report</h3>
+          <p class="step-desc">Submit a detailed report with photos, location, and contact info for your lost or found item.</p>
+        </div>
+        <div class="step-connector" aria-hidden="true">→</div>
+        <div class="step-card">
+          <div class="step-num" aria-hidden="true">02</div>
+          <div class="step-icon" aria-hidden="true">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          </div>
+          <h3 class="step-title">Search</h3>
+          <p class="step-desc">Browse the board to find matching reports. Filter by category, type, and keywords.</p>
+        </div>
+        <div class="step-connector" aria-hidden="true">→</div>
+        <div class="step-card">
+          <div class="step-num" aria-hidden="true">03</div>
+          <div class="step-icon" aria-hidden="true">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13.6a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2.93h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.18 6.18l1.56-1.56a2 2 0 0 1 2.11-.45c.9.376 1.85.6 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          </div>
+          <h3 class="step-title">Connect</h3>
+          <p class="step-desc">Reach out using the contact info on the report. Meet safely in a public place on campus.</p>
+        </div>
+        <div class="step-connector" aria-hidden="true">→</div>
+        <div class="step-card">
+          <div class="step-num" aria-hidden="true">04</div>
+          <div class="step-icon" aria-hidden="true">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-5"/></svg>
+          </div>
+          <h3 class="step-title">Resolve</h3>
+          <p class="step-desc">Once the item is returned, mark the report as resolved to keep the board clean and current.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================
+       FOOTER
+  ====================================================== -->
+  <footer class="footer" id="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer-inner">
+
+        <div class="footer-brand">
+          <a href="#hero" class="nav-logo footer-logo" aria-label="UniFind Campus home">
+            <div class="logo-icon" aria-hidden="true">
+              <svg width="24" height="24" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="12" cy="12" r="8" stroke="#00F5FF" stroke-width="2.2"/>
+                <path d="M18 18L24 24" stroke="#00F5FF" stroke-width="2.2" stroke-linecap="round"/>
+                <circle cx="12" cy="12" r="3" fill="#9D4EDD" opacity="0.8"/>
+              </svg>
+            </div>
+            <span class="logo-text">UniFind Campus</span>
+          </a>
+          <p class="footer-tagline">Lost it. Find it. Get it back.</p>
+          <p class="footer-note">Built for Entropy 2026 — IIIT Guwahati</p>
+        </div>
+
+        <div class="footer-links">
+          <div class="footer-col">
+            <h4 class="footer-col-title">Platform</h4>
+            <a href="#browse" class="footer-link">Browse Items</a>
+            <a href="#report-section" class="footer-link" onclick="scrollToReport('lost')">Report Lost</a>
+            <a href="#report-section" class="footer-link" onclick="scrollToReport('found')">Report Found</a>
+          </div>
+          <div class="footer-col">
+            <h4 class="footer-col-title">Info</h4>
+            <a href="#about" class="footer-link">How It Works</a>
+            <button class="footer-link footer-link-btn" onclick="showPrivacyModal()">Privacy Policy</button>
+            <button class="footer-link footer-link-btn" onclick="showModeratorModal()">Moderator Sign In</button>
+            <button class="footer-link footer-link-btn" onclick="clearAllData()">Reset Search &amp; Filters</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p class="footer-copy">© 2026 UniFind Campus · IIIT Guwahati · Built with HTML, CSS &amp; JS</p>
+        <p class="footer-copy secondary">Reports are stored in Supabase and shared across devices when cloud setup is complete.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ======================================================
+       ITEM DETAILS MODAL
+  ====================================================== -->
+  <div class="modal-overlay" id="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title" aria-hidden="true">
+    <div class="modal" id="item-modal">
+      <button class="modal-close" id="modal-close" aria-label="Close details">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+      <div class="modal-content" id="modal-content">
+        <!-- Dynamically populated -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================
+       PRIVACY MODAL
+  ====================================================== -->
+  <div class="modal-overlay" id="privacy-overlay" role="dialog" aria-modal="true" aria-labelledby="privacy-modal-title" aria-hidden="true">
+    <div class="modal privacy-modal">
+      <button class="modal-close" onclick="closePrivacyModal()" aria-label="Close privacy policy">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+      <div class="modal-content">
+        <h2 id="privacy-modal-title" class="modal-section-title">Privacy &amp; Safety</h2>
+        <p>UniFind Campus uses Supabase to share public-safe report details across devices. Contact details are hidden by default and are included in public listings only when the reporter explicitly opts in. Item photos are publicly viewable; never upload sensitive documents or personal information.</p>
+        <br/>
+        <h3 class="modal-sub-title">Guidelines</h3>
+        <ul class="privacy-list">
+          <li>Only report items you personally lost or found on campus.</li>
+          <li>Do not include sensitive personal information in public descriptions.</li>
+          <li>Always verify ownership before returning an item.</li>
+          <li>Meet in public, well-lit campus locations when exchanging items.</li>
+          <li>The footer control does not delete shared reports. Contact an approved moderator for an authorized data request.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================
+       MODERATOR SIGN-IN MODAL
+  ====================================================== -->
+  <div class="modal-overlay" id="moderator-overlay" role="dialog" aria-modal="true" aria-labelledby="moderator-modal-title" aria-hidden="true">
+    <div class="modal moderator-modal">
+      <button class="modal-close" type="button" onclick="closeModeratorModal()" aria-label="Close moderator sign in">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+      <div class="modal-content">
+        <div class="section-tag">MODERATOR ACCESS</div>
+        <h2 id="moderator-modal-title" class="modal-section-title">Moderator sign in</h2>
+        <p class="modal-description">Only an account approved in Supabase can mark reports as resolved. Public accounts cannot gain moderator access through this form.</p>
+        <form id="moderator-login-form" class="moderator-login-form">
+          <div class="form-group">
+            <label class="form-label" for="moderator-email">Email</label>
+            <input class="form-input" id="moderator-email" name="email" type="email" autocomplete="username" required maxlength="254" />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="moderator-password">Password</label>
+            <input class="form-input" id="moderator-password" name="password" type="password" autocomplete="current-password" required maxlength="200" />
+          </div>
+          <p class="field-error" id="moderator-login-error" role="alert" aria-live="polite"></p>
+          <button class="btn btn-submit" type="submit" id="moderator-login-submit">Sign in</button>
+          <button class="btn btn-ghost" type="button" id="moderator-signout-btn" style="display:none;">Sign out</button>
+        </form>
+        <p class="field-hint">Administrator setup is explained in README.md. Do not create a public sign-up flow for moderator access.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================
+       CONFIRM RESOLVE MODAL
+  ====================================================== -->
+  <div class="modal-overlay" id="resolve-overlay" role="dialog" aria-modal="true" aria-labelledby="resolve-modal-title" aria-hidden="true">
+    <div class="modal resolve-modal">
+      <div class="modal-content">
+        <div class="resolve-icon" aria-hidden="true">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#B6FF5C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-5"/></svg>
+        </div>
+        <h2 id="resolve-modal-title" class="modal-section-title">Mark as Resolved?</h2>
+        <p class="resolve-desc">This will mark the item as resolved and move it out of the active list. This cannot be undone easily.</p>
+        <div class="resolve-actions">
+          <button class="btn btn-ghost" onclick="closeResolveModal()">Cancel</button>
+          <button class="btn btn-resolved" id="confirm-resolve-btn" onclick="confirmResolve()">Yes, Mark Resolved</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="script.js"></script>
+</body>
+</html>
